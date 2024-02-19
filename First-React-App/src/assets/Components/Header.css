@@ -1,0 +1,10 @@
+
+.headMain{
+    display: flex;
+}
+.menubar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-weight: 600;
+}
