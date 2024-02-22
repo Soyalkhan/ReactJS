@@ -8,7 +8,7 @@ import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 function Myhead() {
   return (
     <>
-      <div className="headMain bg-[#000000] h-12 w-100 flex justify-around space-x-0 > * + *">
+      <div className="headMain bg-[#000000] h-15 w-100 flex justify-around">
         <div className="logo font-semibold cursor-pointer">
           <h1 className="text-white p-2 font-semiboldn text-lg font-extrabold">
             <span className="text-blue-400 p-2 font-semiboldn text-lg font-extrabold">
