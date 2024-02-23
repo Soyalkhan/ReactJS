@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 
-function App() {
+export default function App() {
 
   let student = {
     Name: "soyal",
@@ -11,7 +11,10 @@ function App() {
   }
 
   const [Number,setNumber] = useState(0);
-  const [Name,setName] = useState("User Name")
+  const [Name,setName] = useState("Username")
+  const [Age,setAge] = useState("Age")
+  const [Phone,setPhone] = useState("Phone")
+
 
   const Increment = ()=>{
     if(Number < 15){
@@ -24,6 +27,13 @@ function App() {
       setNumber(Number - 1);
     }
   }
+
+  const [showName,setShowName] = useState("Rohan.");
+
+  const handlereset = () =>{
+    setShowName("Kuch bhi rakh you :)")
+  }
+
   return (
     <>
     <p>Note by useState it will populate the output to every variable as defined</p>
@@ -32,11 +42,32 @@ function App() {
         
         <button onClick={Increment}>Inrement</button><button onClick={Decrement}>Decrement</button>
     
-       <p>Student Name is : {student.Name}</p> 
-       <p>Student age : {student.Age}</p>
-       <p>Student Phone : {student.Phone}</p>
+       <p>Student Name is : {Name}</p> 
+       <p>Student Age : {Age}</p>
+       <p>Student Phone : {Phone}</p>
+
+       <button
+       onClick={()=>{
+        setName(student.Name)
+        setAge(student.Age)
+        setPhone(student.Phone)
+       }}
+       >Fetch details..</button>
+
+<br/>
+<br/> 
+       <input
+        type="text" 
+        placeholder='enter your name ?'
+        value={showName}
+        onChange={e => setShowName(e.target.value)}
+        />
+       <p>Hello: {showName}</p>
+       <button
+       onClick={handlereset}
+       >Reset</button>
     </>
   )
 }
 
-export default App
+
