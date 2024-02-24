@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 
@@ -31,8 +31,23 @@ export default function App() {
   const [showName,setShowName] = useState("Rohan.");
 
   const handlereset = () =>{
-    setShowName("Kuch bhi rakh you :)")
+    setShowName("Kuch bhi rakh de :)")
   }
+
+function VideoPlayer({src , isPlaying}){
+  const ref = useRef(null);
+
+  useEffect(()=>{
+    if(isPlaying){
+      ref.current.play();
+    }else{
+      ref.current.pause();
+    }
+  });
+
+  return <video ref={ref} src={src} loop playsInline/>;
+}
+  const [isPlaying,setIsPlaying] = useState(false);
 
   return (
     <>
@@ -66,6 +81,19 @@ export default function App() {
        <button
        onClick={handlereset}
        >Reset</button>
+
+
+       <p>-------------useEffect , useRef , useState---------- </p>
+
+       <button
+       onClick={()=> setIsPlaying(!isPlaying)}>
+        {isPlaying ? 'Paused' : 'Play'}
+       </button>
+       <videoPlayer 
+       isPlaying="isPlaying"
+       src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+       />
+      
     </>
   )
 }
