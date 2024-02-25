@@ -1,35 +1,30 @@
-import { useState } from "react"
-import Useeffect from "./UseEffect";
+import { useState, useEffect } from 'react';
 
-export default function Moveout(){
-    const [postition,setposition] = useState({x:0,y:0});
+export default function Moveout() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-    Useeffect(()=>{
-        function handlemove(e){
-            setposition({x: e.clientX,y: e.clientY});
-        }
+  useEffect(() => {
+    function handleMove(e) {
+      setPosition({ x: e.clientX, y: e.clientY });``
+    }
+    window.addEventListener('pointermove', handleMove);
+    return () => {
+      window.removeEventListener('pointermove', handleMove);
+    };
+  }, []);
 
-        window.addEventListener('pointermove',handlemove);
-        return ()=>{
-            window.removeEventListener('pointermove',handlemove);
-        };
-    },[])
-    return(
-        
-        <div style={{
-            position: 'absolute',
-            backgroundColor:'red',
-            borderRadius:'50%',
-            opacity:'0.5',
-            transform:`translate(${postition.x}px,${postition.y}px)`,
-            pointerEvents:'none',
-            left:'-20',
-            top:'-20',
-            width:'40',
-            height:'40'
-        }}/>
-
-       
-        
-    )
+  return (
+    <div style={{
+      position: 'absolute',
+      backgroundColor: 'pink',
+      borderRadius: '50%',
+      opacity: 0.6,
+      transform: `translate(${position.x}px, ${position.y}px)`,
+      pointerEvents: 'none',
+      left: -20,
+      top: -20,
+      width: 40,
+      height: 40,
+    }} />
+  );
 }
