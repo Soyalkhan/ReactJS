@@ -37,7 +37,6 @@ export default function Useeffect(){
             cursor:"pointer",
             border:"none"
             }}
-            
             >
                 Download Now
                 </button>
