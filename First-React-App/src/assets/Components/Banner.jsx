@@ -4,7 +4,7 @@ import bannerImg from "../images/bn-img.png";
 function Myhead() {
   return (
     <>
-      <div className="MainBanner grid grid-cols-1 sm:grid-cols-2 h-screen bg-red-100">
+      <div className="MainBanner grid grid-cols-1 sm:grid-cols-2 h-screen bg-red-200">
         <div className="innerbanner1 p-10">
           <h1 className="font-arial font-extrabold text-4xl text-red-700">
             <span className="inline-block py-2">
