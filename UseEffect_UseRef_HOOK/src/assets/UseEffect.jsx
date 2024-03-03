@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 export default function Useeffect(){
-    const [count,setCount] = useState(5);
+    const [count,setCount] = useState(20);
     const [button,setButton] = useState(false)
 
  

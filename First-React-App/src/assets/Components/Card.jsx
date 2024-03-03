@@ -1,10 +1,10 @@
 export default function Card() {
   return (
     <>
-      <h1 className="text-6xl font-extrabold text-center text-red-700 p-10">
+      {/* <h1 className="text-6xl font-extrabold text-center text-red-700 p-10">
         End-to-end shopping experience!
-      </h1>
-      <div class="bg-indigo-400 w-64 h-96 rounded overflow-hidden text-white ml-10 mb-10">
+      </h1> */}
+      <div class="bg-indigo-400 w-60 h-96 rounded overflow-hidden text-white ml-10 mb-10">
         <div class="px-6 py-4">
           <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
           <p class="text-gray-700 text-base">

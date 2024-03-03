@@ -9,10 +9,10 @@ import Moveout from './assets/Moveout.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <App /> */}
-    {/* <Useeffect/>
-    <UseEffect2/> */}
-    {/* <Chat/> */}
-    <Moveout/>
+    <App />
+    <Useeffect/>
+    <UseEffect2/>
+    <Chat/>
+    {/* <Moveout/> */}
   </React.StrictMode>,
 )
