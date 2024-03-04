@@ -1,19 +1,21 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Navbar from './assets/component/Navbar'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import Navbar from "./assets/component/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [color, setColor] = useState(0);
 
-  useEffect(()=>{
-    alert("count changed")
-  },[count])
+  useEffect(() => {
+    alert("count changed");
+    setColor('pink');
+  }, [count]);
 
   return (
     <>
-    <Navbar color={"blue"}/>
+      <Navbar color={"navy" + " blue " + color} />
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -35,7 +37,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
