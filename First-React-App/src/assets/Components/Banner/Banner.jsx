@@ -5,7 +5,7 @@ import bannerImg from "../images/bn-img.png"
 function Myhead() {
   return (
     <>
-      <div className="MainBanner grid grid-cols-1 sm:grid-cols-2 h-screen bg-red-200">
+      <div className="MainBanner grid grid-cols-1 sm:grid-cols-2 h-96 bg-red-200">
         <div className="innerbanner1 p-10">
           <h1 className="font-arial font-extrabold text-4xl text-red-700">
             <span className="inline-block py-2">
@@ -26,7 +26,7 @@ function Myhead() {
         </div>
         <div className="innerbanner2 justify-self-end">
         <div className="div2 ">
-          <img className="max-w-full h-auto" src={bannerImg} alt="img" />
+          <img className="max-w-full h-96" src={bannerImg} alt="img" />
         </div>
         </div>
         
