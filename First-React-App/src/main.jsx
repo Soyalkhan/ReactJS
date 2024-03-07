@@ -7,6 +7,7 @@ import Home from './assets/Components/Home/Home.jsx'
 import AboutUs from './assets/Components/AboutUS/About.jsx'
 import Category from './assets/Components/Category/Category.jsx'
 import Collection from './assets/Components/Collections/Collection.jsx'
+import Contact from './assets/Components/ContactUs/Contact.jsx'
 
 import { createBrowserRouter } from 'react-router-dom'
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "Collection",
         element: <Collection />
+      },
+      {
+        path: "Contact",
+        element: <Contact />
       }
      
     ]
