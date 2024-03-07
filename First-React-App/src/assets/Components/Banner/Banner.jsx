@@ -1,5 +1,6 @@
 import React from "react";
-import bannerImg from "../images/bn-img.png";
+
+import bannerImg from "../images/bn-img.png"
 
 function Myhead() {
   return (
