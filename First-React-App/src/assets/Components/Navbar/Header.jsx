@@ -64,6 +64,16 @@ function Myhead() {
           >
             About Us
           </NavLink>
+          <NavLink
+            to="/GitHub"
+            className={({ isActive }) =>
+              `block py-2 pr-4 pl-3 duration-200 ${
+                isActive ? "text-orange-700" : "text-white"
+              } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
+            }
+          >
+            GitHub
+          </NavLink>
         </div>
         <div className="action-side p-3 gap-5 flex">
           <div className="search">
