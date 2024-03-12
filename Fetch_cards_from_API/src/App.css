@@ -13,7 +13,6 @@
   line-height: 1;
   text-align: center;
   color: aliceblue;
-  /* text-transform: uppercase; */
   height: 500px;
   border-radius: 5px;
   width: 300px;
@@ -21,3 +20,4 @@
   font-family:Verdana, Geneva, Tahoma, sans-serif;
   
 }
+

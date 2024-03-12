@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import "./App.css";
+import Navbar from "./assets/Components/Navbar";
 
 function App() {
   const [users, setUser] = useState([]);
@@ -14,7 +15,7 @@ function App() {
   }, []);
 
   return (
-    <>  
+    <>  <Navbar/>
       <div className="container">
         {users.map((user) => (
           <div className="main">
