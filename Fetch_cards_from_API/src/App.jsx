@@ -1,53 +1,46 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-import './App.css'
+import "./App.css";
 
 function App() {
-  const [Userdata, setUserdata] = useState(null)
-
-  useEffect(()=>{
-    const id = 1;
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
-    .then(response => response.json())
-    .then(data=>{
-      setUserdata(data)  
-    })
-    .catch(error => {
-      console.error('Error fetching :', error);
-    })
-  },[]);
+  const [users, setUser] = useState([]);
   useEffect(() => {
-    console.log("Fetching...");
-
-    if (Userdata) {
-      console.log(Userdata.id);
-      document.querySelector('.id').innerText = Userdata.id;
-      console.log(Userdata.userId);
-      document.querySelector('.userid').innerText = Userdata.userId;
-
-      console.log(Userdata.title);
-      document.querySelector('.title').innerText = Userdata.title;
-
-      console.log(Userdata.body);
-      document.querySelector('.body').innerText = Userdata.body;
-
-    }
-  }, [Userdata]);
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+     
+      .then((data) => setUser(data));
+      let LoadCom = true;
+      
+  }, []);
 
   return (
-    <>
-    <div className='main'>
-    <h1 className='id'>id</h1>
-    <hr/>
-    <h1 className='userid'>userid</h1>
-    <hr/>
-    <h2 className='title'>Title</h2>
-    <hr/>
-    <p className='body'>body</p>
-
-    </div>
+    <>  
+      <div className="container">
+        {users.map((user) => (
+          <div className="main">
+            <h1 className="id">
+              <span className="sp">ID :</span> {user.id}
+            </h1>
+            <hr />
+            <h1 className="userid">
+              <span className="sp">User ID : </span>
+              {user.userId}
+            </h1>
+            <hr />
+            <h2 className="title">
+              <span className="sp"> Title : </span>
+              {user.title}
+            </h2>
+            <hr />
+            <p className="body">
+              <span className="sp"> Message Body : </span>
+              {user.body}
+            </p>
+          </div>
+        ))}
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
