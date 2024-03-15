@@ -18,8 +18,6 @@ function App() {
   const genRanIMG = () =>{
     let index = Math.floor(Math.random() * 78);
     return index;
-    // const imgURL = `https://xsgames.co/randomusers/assets/avatars/male/${num}.jpg`;
-    // setAvtar(imgURL);
   }
 
   return (
