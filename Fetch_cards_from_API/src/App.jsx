@@ -8,7 +8,6 @@ function App() {
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => response.json())
-     
       .then((data) => setUser(data));
       let LoadCom = true;
       
