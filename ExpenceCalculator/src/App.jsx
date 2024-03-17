@@ -8,7 +8,7 @@ function App() {
   const inputRef = useRef(null);
 
   function handleClick(){
-    inputRef.current.disable
+    inputRef.current.focus()
     inputRef.current.focus();
   }
   return (
@@ -28,10 +28,10 @@ function App() {
                 ref={inputRef}
                 value={35000}
                 className="salary w-28 bg-[#AC7D88] text-red-900 font-bold text-2xl"
-                disabled
+                
               />
             </h3>
-            <CiEdit className="bg-[#643843] rounded-lg cursor-pointer text-2xl mr-4 text-white"/>
+            <CiEdit onClick={handleClick} className="bg-[#643843] rounded-lg cursor-pointer text-2xl mr-4 text-white"/>
             
             <h3 className="budget text-2xl font-bold text-[#FDF0D1]">
               Balance :{" "}
