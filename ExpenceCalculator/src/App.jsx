@@ -1,16 +1,54 @@
 import { useRef, useState } from "react";
 import { CiTrash } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
+import { LuFileEdit } from "react-icons/lu";
 import { PieChart } from "react-minimal-pie-chart";
 import "./App.css";
 
 function App() {
-  const inputRef = useRef(null);
+  const [income,setIncome] = useState(35000)
+  const [amount ,setAmount] = useState("");
+  const [cat,setCat] = useState("");
+  const [date,setDate] = useState("");
+  const [balance,setBalance] = useState("")
+  const [expList ,setExpList] = useState([]);
 
+  const inputRef = useRef(null);
+  const idCounter = useRef(1);//to provide unique id's
+  console.log(expList)
   function handleClick(){
     inputRef.current.focus()
-    inputRef.current.focus();
   }
+
+  function handleAdd(e){
+    const newExpense = {
+      id:idCounter.current,
+      amount: amount,
+      cat: cat,
+      date: date
+    };
+    setExpList([...expList,newExpense])
+    idCounter.current++;
+    setAmount("")
+    setCat("")
+    setDate("")
+    setBalance(
+    35000 - amount
+    )
+  }
+
+  function handleDelete(){
+    setExpList(expList.filter((expense) => expense.id !== id));
+  }
+
+  function handleEdit(){
+
+  }
+
+  function handleChange(e){
+    setAmount(e.target.value)
+  }
+
   return (
     <>
       <div className="heading">
@@ -26,18 +64,19 @@ function App() {
               <input
                 type="text"
                 ref={inputRef}
-                value={35000}
+                value={income} // Value controlled by React state
+                onChange={(e) => setIncome(e.target.value)}
                 className="salary w-28 bg-[#AC7D88] text-red-900 font-bold text-2xl"
                 
               />
-            </h3>
-            <CiEdit onClick={handleClick} className="bg-[#643843] rounded-lg cursor-pointer text-2xl mr-4 text-white"/>
+            </h3> {"  "}
+            <CiEdit onClick={handleClick} className="bg-[#643843] rounded-lg cursor-pointer text-2xl mr-4 ml-3 text-white"/>
             
             <h3 className="budget text-2xl font-bold text-[#FDF0D1]">
               Balance :{" "}
               <input
                 type="text"
-                value={20000}
+                value={balance}
                 className="balace w-28 bg-[#AC7D88] text-red-900 font-bold text-2xl"
                 disabled
               />
@@ -46,39 +85,44 @@ function App() {
           <div className="adding-area mb-10 ml-5 mr-5">
             <div className="add-amt">
               <input
-                type="text"
+                onChange={handleChange}
+                value={amount}
+                type="number"
                 placeholder="Amount here."
                 className="w-full sm:w-3/5 p-4 bg-[#FDF0D1] text-[#AC7D88] text-2xl placeholder-gray-400 rounded-lg border-2 border-red-700"
               />
             </div>
             <div className="task  text-black">
               <select
-                name=""
-                id=""
+              value={cat}
+              onChange={(e) => setCat(e.target.value)}
                 className="rounded-lg w-full sm:w-3/5 mt-5 text-2xl p-4 border-2 border-red-700"
               >
-                <option value="Fee">College Fee</option>
-                <option value="Fee">Personal</option>
-                <option value="Fee">Family</option>
-                <option value="Fee">Electronic</option>
-                <option value="Fee">Recharge</option>
-                <option value="Fee">Ration or Rent</option>
+                <option value="Select Category">Select Category</option>
+                <option value="College Fee">College Fee</option>
+                <option value="Personal">Personal</option>
+                <option value="Family">Family</option>
+                <option value="Electronic">Electronic</option>
+                <option value="Recharge">Recharge</option>
+                <option value="Ration or Rent">Ration or Rent</option>
               </select>
             </div>
             <div className="date">
               <input
+              
+              onChange={(e) => setDate(e.target.value)}
                 type="date"
-                name=""
-                className="w-full sm:w-3/5 p-4 text-2xl rounded-lg mt-5 text-black border-2 border-red-700"
+                className=" date-input w-full sm:w-3/5 p-4 text-2xl rounded-lg mt-5 text-black border-2 border-red-700"
               />
             </div>
             <div className="submit-expense">
-              <button className="bg-[#FDF0D1] text-red-600 text-2xl p-3 rounded-2xl mt-5 w-full sm:w-3/5 border-2 border-red-700 hover:bg-red-200">
+              <button onClick={handleAdd} className="bg-[#FDF0D1] text-red-600 text-2xl p-3 rounded-2xl mt-5 w-full sm:w-3/5 border-2 border-red-700 hover:bg-red-200">
                 Submit
               </button>
             </div>
           </div>
         </div>
+
         <div className="right">
           <div className="data p-5">
             <div className="flex flex-col ">
@@ -103,18 +147,22 @@ function App() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="border-b border-neutral-200 dark:border-white/10">
+                        {expList.map((item,idx)=>
+                        
+                        <tr key={idx} className="border-b border-neutral-200 dark:border-white/10">
                           <td className="whitespace-nowrap px-6 py-4 font-medium">
-                            17/02/2024
+                            {item.date}
                           </td>
                           <td className="whitespace-nowrap px-6 py-4">
-                            College Fee
+                            {item.cat}
                           </td>
-                          <td className="whitespace-nowrap px-6 py-4">7500</td>
-                          <td className="whitespace-nowrap px-6 py-4 cursor-pointer text-2xl content-center">
-                            <CiTrash />
+                          <td className="whitespace-nowrap px-6 py-4">{item.amount}</td>
+                          <td className="flex gap-3 whitespace-nowrap px-6 py-4 cursor-pointer text-2xl content-center text-red-700">
+                            <CiTrash onClick={handleDelete} />
+                            <LuFileEdit onClick={handleEdit}/>
                           </td>
                         </tr>
+                        )}
                       </tbody>
                     </table>
                   </div>
