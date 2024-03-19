@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CiTrash } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
 import { LuFileEdit } from "react-icons/lu";
@@ -6,48 +6,69 @@ import { PieChart } from "react-minimal-pie-chart";
 import "./App.css";
 
 function App() {
-  const [income,setIncome] = useState(35000)
-  const [amount ,setAmount] = useState("");
-  const [cat,setCat] = useState("");
-  const [date,setDate] = useState("");
-  const [balance,setBalance] = useState("")
-  const [expList ,setExpList] = useState([]);
-
+  const [income, setIncome] = useState("35000");
+  const [amount, setAmount] = useState("");
+  const [cat, setCat] = useState("");
+  const [date, setDate] = useState("");
+  const [balance, setBalance] = useState("");
+  const [expList, setExpList] = useState([]);
+  const ranID = Math.random()
+  console.log(ranID) ;
   const inputRef = useRef(null);
-  const idCounter = useRef(1);//to provide unique id's
-  console.log(expList)
-  function handleClick(){
-    inputRef.current.focus()
+  const idCounter = useRef(1); //to provide unique id's
+  // console.log(expList);
+  // useEffect(()=>{
+  //   // Save data to local storage whenever expList changes
+  //   localStorage.setItem("expenses",JSON.stringify(expList));
+  //   console.log("data saved to localstorage.",expList);
+  // },[expList]);
+
+  useEffect(()=>{
+    //load data from the local storage on everyload
+    const StoredExpenceList = localStorage.getItem("expenses");
+    if(StoredExpenceList){
+      setExpList(JSON.parse(StoredExpenceList));
+    }
+
+  },[]);
+  function handleClick() {
+    inputRef.current.focus();
   }
 
-  function handleAdd(e){
+  function handleAdd(e) {
     const newExpense = {
-      id:idCounter.current,
+      id: idCounter.current,
       amount: amount,
       cat: cat,
-      date: date
+      date: date,
     };
-    setExpList([...expList,newExpense])
+
+    
+    setExpList([...expList, newExpense]);
     idCounter.current++;
-    setAmount("")
-    setCat("")
-    setDate("")
-    setBalance(
-    35000 - amount
-    )
+    setAmount("");
+    setCat("");
+    setDate("");
+    setBalance(income - amount);
+    
+      localStorage.setItem("expenses",JSON.stringify(expList));
+      console.log("data saved to localstorage.",expList);
+    
   }
 
-  function handleDelete(){
+  function handleDelete(id) {
+    console.log("delete button initiated.");
     setExpList(expList.filter((expense) => expense.id !== id));
   }
 
-  function handleEdit(){
+  function handleEdit() {}
 
+  function handleChange(e) {
+    setAmount(e.target.value);
   }
 
-  function handleChange(e){
-    setAmount(e.target.value)
-  }
+
+
 
   return (
     <>
@@ -67,11 +88,13 @@ function App() {
                 value={income} // Value controlled by React state
                 onChange={(e) => setIncome(e.target.value)}
                 className="salary w-28 bg-[#AC7D88] text-red-900 font-bold text-2xl"
-                
               />
-            </h3> {"  "}
-            <CiEdit onClick={handleClick} className="bg-[#643843] rounded-lg cursor-pointer text-2xl mr-4 ml-3 text-white"/>
-            
+            </h3>{" "}
+            {"  "}
+            <CiEdit
+              onClick={handleClick}
+              className="bg-[#643843] rounded-lg cursor-pointer text-2xl mr-4 ml-3 text-white"
+            />
             <h3 className="budget text-2xl font-bold text-[#FDF0D1]">
               Balance :{" "}
               <input
@@ -94,8 +117,8 @@ function App() {
             </div>
             <div className="task  text-black">
               <select
-              value={cat}
-              onChange={(e) => setCat(e.target.value)}
+                value={cat}
+                onChange={(e) => setCat(e.target.value)}
                 className="rounded-lg w-full sm:w-3/5 mt-5 text-2xl p-4 border-2 border-red-700"
               >
                 <option value="Select Category">Select Category</option>
@@ -109,14 +132,16 @@ function App() {
             </div>
             <div className="date">
               <input
-              
-              onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => setDate(e.target.value)}
                 type="date"
                 className=" date-input w-full sm:w-3/5 p-4 text-2xl rounded-lg mt-5 text-black border-2 border-red-700"
               />
             </div>
             <div className="submit-expense">
-              <button onClick={handleAdd} className="bg-[#FDF0D1] text-red-600 text-2xl p-3 rounded-2xl mt-5 w-full sm:w-3/5 border-2 border-red-700 hover:bg-red-200">
+              <button
+                onClick={handleAdd}
+                className="bg-[#FDF0D1] text-red-600 text-2xl p-3 rounded-2xl mt-5 w-full sm:w-3/5 border-2 border-red-700 hover:bg-red-200"
+              >
                 Submit
               </button>
             </div>
@@ -147,22 +172,27 @@ function App() {
                         </tr>
                       </thead>
                       <tbody>
-                        {expList.map((item,idx)=>
-                        
-                        <tr key={idx} className="border-b border-neutral-200 dark:border-white/10">
-                          <td className="whitespace-nowrap px-6 py-4 font-medium">
-                            {item.date}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {item.cat}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">{item.amount}</td>
-                          <td className="flex gap-3 whitespace-nowrap px-6 py-4 cursor-pointer text-2xl content-center text-red-700">
-                            <CiTrash onClick={handleDelete} />
-                            <LuFileEdit onClick={handleEdit}/>
-                          </td>
-                        </tr>
-                        )}
+                        {console.log()}
+                        {expList.map((item) => (
+                          <tr
+                            key={ranID}
+                            className="border-b border-neutral-200 dark:border-white/10"
+                          >
+                            <td className="whitespace-nowrap px-6 py-4 font-medium">
+                              {item.date}
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4">
+                              {item.cat}
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4">
+                              {item.amount}
+                            </td>
+                            <td className="flex gap-3 whitespace-nowrap px-6 py-4 cursor-pointer text-2xl content-center text-red-700">
+                              <CiTrash onClick={() => handleDelete(item.id)} />
+                              {/* <LuFileEdit onClick={handleEdit} /> */}
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
