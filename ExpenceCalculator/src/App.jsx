@@ -35,6 +35,7 @@ function App() {
   }, [balance]);
 
   useEffect(() => {
+  
     localStorage.setItem("expenses", JSON.stringify(expList));
   }, [expList]);
 
@@ -46,7 +47,9 @@ function App() {
     if(balance < 0){
       setLine("Your budget is over then your salary")
     }
-
+    if(amount === "" || cat === "" || date === ""){
+      alert("enter amount!")
+    }else{
     e.preventDefault();
     const newExpense = {
       id: idCounter.current,
@@ -59,7 +62,9 @@ function App() {
     setBalance(prevBalance => prevBalance - amount);
     setAmount("");
     setCat("");
-    setDate("");
+    setDate("dd,mm,yyyy");
+  }
+   
   }
 
   function handleDelete(id) {
