@@ -6,75 +6,76 @@ import { PieChart } from "react-minimal-pie-chart";
 import "./App.css";
 
 function App() {
-  const [line,setLine] = useState();
-  const [income, setIncome] = useState(() => {
-    const savedIncome = localStorage.getItem("income");
-    return savedIncome || "35000";
-  });
+  const [line, setLine] = useState();
   const [amount, setAmount] = useState("");
   const [cat, setCat] = useState("");
   const [date, setDate] = useState("");
-  const [balance, setBalance] = useState(() => {
-    const savedBalance = localStorage.getItem("balance");
-    return savedBalance || income;
+  const [salary,setSalary] = useState()
+  const [total, setTotal] = useState(() => {
+    const savedTotal = localStorage.getItem("total");
+    return savedTotal ? parseInt(savedTotal) : 0;
   });
+
   const [expList, setExpList] = useState(() => {
     const savedExpenses = localStorage.getItem("expenses");
     return savedExpenses ? JSON.parse(savedExpenses) : [];
   });
 
-  const inputRef = useRef(null);
+  useEffect(()=>{
+    setSalary(40000)
+  })
+  // const inputRef = useRef(null);
   const idCounter = useRef(1); //to provide unique id's
 
+  useEffect(()=>{
+    if(total > salary){
+      setLine("Your budget is higher then you salary!!")
+    }
+  },[total])
   useEffect(() => {
-    localStorage.setItem("income", income);
-  }, [income]);
+    localStorage.setItem("total", JSON.stringify(total));
+  }, [total]);
 
   useEffect(() => {
-    localStorage.setItem("balance", balance);
-  }, [balance]);
-
-  useEffect(() => {
-  
-    localStorage.setItem("expenses", JSON.stringify(expList));
+  localStorage.setItem("expenses", JSON.stringify(expList));
   }, [expList]);
 
-  function handleClick() {
-    inputRef.current.focus();
-  }
-
+ 
   function handleAdd(e) {
-    if(balance < 0){
-      setLine("Your budget is over then your salary")
+    if (salary < 0) {
+      setLine("Your budget is over then your salary");
     }
-    if(amount === "" || cat === "" || date === ""){
-      alert("enter amount!")
-    }else{
-    e.preventDefault();
-    const newExpense = {
-      id: idCounter.current,
-      amount: amount,
-      cat: cat,
-      date: date,
-    };
-    setExpList([...expList, newExpense]);
-    idCounter.current++;
-    setBalance(prevBalance => prevBalance - amount);
-    setAmount("");
-    setCat("");
-    setDate("dd,mm,yyyy");
-  }
-   
+    if (amount === "" || cat === "" || date === "") {
+      alert("Enter all value !");
+    } else {
+      e.preventDefault();
+      const newExpense = {
+        id: idCounter.current,
+        amount: parseInt(amount), // Convert amount to integer for proper addition
+        cat: cat,
+        date: date,
+      };
+      setExpList([...expList, newExpense]);
+      idCounter.current++;
+      setTotal(parseInt(amount) + total); // Update total amount spent
+      setAmount("");
+      setCat("");
+      setDate("");
+    }
   }
 
   function handleDelete(id) {
-    setExpList(expList.filter((expense) => expense.id !== id));
+    const deletedExpense = expList.find((expense) => expense.id === id);
+    if (deletedExpense) {
+      const deletedAmount = deletedExpense.amount;
+      setExpList(expList.filter((expense) => expense.id !== id));
+      setTotal((prevTotal) => prevTotal - deletedAmount); // Subtract deleted amount from total
+    }
   }
-
+  
   function handleChange(e) {
     setAmount(e.target.value);
   }
-
 
   return (
     <>
@@ -86,31 +87,16 @@ function App() {
       <div className="ms2 grid grid-cols-1 sm:grid-cols-2 bg-[#AC7D88] mb-10">
         <div className="left sm:border-solid sm:border-r-2 sm:border-[#643843]">
           <div className="heading p-5 flex ">
-            <h3 className="budget text-2xl font-bold text-[#FDF0D1]">
-              Income :{" "}
-              <input
-                type="text"
-                ref={inputRef}
-                value={income} // Value controlled by React state
-                onChange={(e) => setIncome(e.target.value)}
-                className="salary w-28 bg-[#AC7D88] text-red-900 font-bold text-2xl"
-              />
-            </h3>{" "}
-            {"  "}
-            <CiEdit
-              onClick={handleClick}
-              className="bg-[#643843] rounded-lg cursor-pointer text-2xl mr-4 ml-3 text-white"
-            />
             <p className=" text-gray-800 font-bold text-2xl">
+            <span>Your salar is : <span className="text-red-900 font-bold text-2xl"> {salary}</span></span>
               {" "}
-              Balance :{" "}
-              <span className="balance text-red-900 font-bold text-2xl">
-                {balance}
+              <br></br>Total Spent :{" "}
+              <span className="total text-red-900 font-bold text-2xl">
+                {total}
               </span>
             </p>
-            
           </div>
-        
+
           <div className="adding-area mb-10 ml-5 mr-5">
             <div className="add-amt">
               <input
@@ -118,7 +104,7 @@ function App() {
                 value={amount}
                 type="number"
                 placeholder="Amount here."
-                className="w-full sm:w-3/5 p-4 bg-[#FDF0D1] text-[#AC7D88] text-2xl placeholder-gray-400 rounded-lg border-2 border-red-700"
+                className="w-full sm:w-3/5 p-4 bg-[#FDF0D1] text-[#AC7D88] text-2xl placeholder-gray-400 rounded-lg border-2 border-red-700 font-semibold"
               />
             </div>
             <div className="task  text-black">
@@ -150,16 +136,24 @@ function App() {
               >
                 Submit
               </button>
-             
+
               <p className="msg-text text-red-700 p-3 rounded-lg">{line}</p>
-              
-           
             </div>
           </div>
         </div>
 
         <div className="right">
           <div className="data p-5">
+            <div
+              className="clr bg-red-600 p-2 text-white rounded-lg w-20 ml-6 cursor-pointer"
+              onClick={() =>{
+                localStorage.clear();
+                setTotal(0)
+              }
+            }
+            >
+              clear all
+            </div>
             <div className="flex flex-col ">
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-2">
                 <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -231,6 +225,3 @@ function App() {
 }
 
 export default App;
-
-
-
