@@ -17,6 +17,10 @@ function App() {
    console.log(form);
   }
 
+  const handlemousedown = () =>{
+    alert("mouse down");
+    document.getElementsByClassName(".helo").value = "mouse down triggered"
+  }
   return (
     <>
 
@@ -31,7 +35,7 @@ function App() {
         by default you cant change the valaue of input you should have to write onchange <br/>
         <input type="text" name='email' value={form.name} onChange={handleonchange}/><br/>
         <input type="text" name='phone' value={form.phone} onChange={handleonchange}/>
-      
+      <div className="helo" onMouseDown={handlemousedown}>asdfs</div>
     </>
   )
 }
