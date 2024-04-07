@@ -5,11 +5,14 @@ import Navbar from "./assets/Components/Navbar";
 
 function App() {
   const [users, setUser] = useState([]);
+  let k = 0;
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => response.json())
       .then((data) => setUser(data));
-      let LoadCom = true;
+        k++;
+
+      // let LoadCom = true;
       
   }, []);
 
@@ -17,7 +20,7 @@ function App() {
     <>  <Navbar/>
       <div className="container">
         {users.map((user) => (
-          <div className="main">
+          <div className="main" key={k}>
             <h1 className="id">
               <span className="sp">ID :</span> {user.id}
             </h1>
